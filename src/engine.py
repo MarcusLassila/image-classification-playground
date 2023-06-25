@@ -50,6 +50,7 @@ def training_loop(model: torch.nn.Module,
         ret['train_loss'].append(train_loss)
         ret['train_crit'].append(train_crit)
         if valid_loader:
+            valid_loss, valid_crit = valid_step()
             ret['valid_loss'].append(valid_loss)
             ret['valid_crit'].append(valid_crit)
 
