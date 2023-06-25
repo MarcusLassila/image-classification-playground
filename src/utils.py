@@ -1,7 +1,22 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import random
+from PIL import Image
 
-def plot_loss_curves(training_data, criterion="criterion"):
+def plot_random_samples(dataset, dim=4):
+    fig = plt.figure(figsize=(10, 10))
+    for i in range(1, dim ** 2 + 1):
+        image, label = random.choice(dataset)
+        fig.add_subplot(dim, dim, i)
+        if isinstance(image, Image.Image):
+            plt.imshow(image)
+        else:
+            plt.imshow(image.permute(1, 2, 0))
+        plt.title(label)
+        plt.axis("off")
+    plt.show()
+
+def plot_training_data(training_data, criterion="criterion"):
     epochs = range(len(training_data['train_loss']))
     plt.figure(figsize=(16, 8))
 

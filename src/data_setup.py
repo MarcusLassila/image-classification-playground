@@ -1,24 +1,16 @@
-import matplotlib.pyplot as plt
-import random
+from torch.utils.data import DataLoader, Subset
 import torchvision
 
 class Flowers102DataSetup:
-    
-    def __init__(self, train_transform=None, test_transform=None):
-        self.train_dataset = torchvision.datasets.Flowers102(root='./data', split='train', transform=train_transform, download=True)
-        self.valid_dataset = torchvision.datasets.Flowers102(root='./data', split='val', transform=test_transform, download=True)
+
+    def __init__(self, train_transform=None, test_transform=None, batch_size=1, num_workers=0):
+        self.train_dataset = Subset(torchvision.datasets.Flowers102(root='./data', split='train', transform=train_transform, download=True), range(400))
+        self.valid_dataset = Subset(torchvision.datasets.Flowers102(root='./data', split='val', transform=None, download=True), range(100))
         self.test_dataset  = torchvision.datasets.Flowers102(root='./data', split='test', transform=test_transform, download=True)
 
-    def plot_random_samples(self, dim=4):
-        fig = plt.figure(figsize=(10, 10))
-        for i in range(1, dim ** 2 + 1):
-            image, label = random.choice(self.train_dataset)
-            fig.add_subplot(dim, dim, i)
-            plt.imshow(image)
-            plt.title(label)
-            plt.axis("off")
-        plt.show()
+        self.train_dataloader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers, pin_memory=True)
+        self.valid_dataloader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=True)
+        self.test_dataloader  = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=True)
 
 if __name__ == '__main__':
-    flowers102 = Flowers102DataSetup()
-    flowers102.plot_random_samples()
+    pass
