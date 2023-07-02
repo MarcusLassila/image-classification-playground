@@ -15,6 +15,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--epochs", type=int)
 parser.add_argument("--batch-size", type=int)
 parser.add_argument("--model-name", type=str)
+parser.add_argument("--save-path", type=str)
 parser.add_argument('--pretrained', action=argparse.BooleanOptionalAction)
 parser.add_argument('--experiment', action=argparse.BooleanOptionalAction)
 
@@ -24,6 +25,7 @@ class Config:
     batch_size   = args.batch_size or 32
     epochs       = args.epochs or 5
     model_name   = args.model_name or "unnamed_model"
+    save_path    = args.save_path or None
     num_classes  = 102
     num_workers  = os.cpu_count()
     device       = "cuda" if torch.cuda.is_available() else "cpu"
@@ -59,6 +61,8 @@ def run():
                                          scheduler=scheduler)
 
     utils.plot_training_data(training_data, criterion="F1-Score")
+    if Config.save_path:
+        utils.save_model(model, target_dir=f'{Config.save_path}/models', model_name=Config.model_name)
 
 if __name__ == '__main__':
     run()

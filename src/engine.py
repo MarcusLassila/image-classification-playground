@@ -45,7 +45,7 @@ def training_loop(model: torch.nn.Module,
                 valid_crit += criterion(y, pred.argmax(dim=1)).item()
         return valid_loss / len(valid_loader), valid_crit / len(valid_loader)
 
-    for epoch in tqdm(range(epochs), desc=f"Running on {device}"):
+    for _ in tqdm(range(epochs), desc=f"Running on {device}"):
         train_loss, train_crit = train_step()
         ret['train_loss'].append(train_loss)
         ret['train_crit'].append(train_crit)

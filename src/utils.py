@@ -2,6 +2,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 from PIL import Image
+from pathlib import Path
+import torch
+
+def save_model(model, target_dir, model_name):
+    '''
+    Save model (state dict) to <target_dir>/<model_name>.pth
+    '''
+    target_dir_path = Path(target_dir)
+    target_dir_path.mkdir(parents=True, exist_ok=True)
+    model_save_path = target_dir_path / (model_name + '.pth')
+    print(f"[info] Saving model to {model_save_path}")
+    torch.save(model.state_dict(), model_save_path)
+
+def load_model(model, save_path):
+    model.load_state_dict(torch.load(f=save_path))
+    model.eval()
+    return model
 
 def plot_random_samples(dataset, dim=4):
     fig = plt.figure(figsize=(10, 10))
