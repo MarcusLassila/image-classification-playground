@@ -33,7 +33,7 @@ def plot_random_samples(dataset, dim=4):
 
 def plot_training_data(training_data, criterion="criterion"):
     epochs = range(len(training_data['train_loss']))
-    plt.figure(figsize=(16, 8))
+    plt.figure(figsize=(14, 7))
 
     plt.subplot(1, 2, 1)
     plt.plot(epochs, training_data['train_loss'], label="train_loss")
