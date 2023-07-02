@@ -10,6 +10,3 @@ class Flowers102DataSetup:
         self.train_dataloader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers, pin_memory=True)
         self.valid_dataloader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=True)
         self.test_dataloader  = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=True)
-
-if __name__ == '__main__':
-    pass

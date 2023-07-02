@@ -16,6 +16,6 @@ def infer(model, image_path, device='cpu'):
         pred = probs.argmax(dim=1)
         probs = probs.squeeze()
 
-    plt.title(f"Predicted label: {pred}\nProbability: {100 * probs[pred.item()]:.1f}%")
+    plt.title(f"Predicted label: {pred.item()}\nProbability: {100 * probs[pred.item()]:.1f}%")
     plt.axis("off")
     plt.show()
