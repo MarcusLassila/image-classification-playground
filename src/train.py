@@ -1,4 +1,4 @@
-from data_setup import Flowers102DataSetup
+import data_setup
 import engine
 import pretrained_models
 import utils
@@ -36,10 +36,10 @@ def augmented_transform(transform=None):
 
 def run():
     model = pretrained_models.efficient_net(102, 'b0')
-    flowers102 = Flowers102DataSetup(train_transform=augmented_transform(model.transforms),
-                                     test_transform=model.transforms,
-                                     batch_size=Config.batch_size,
-                                     num_workers=Config.num_workers)
+    flowers102 = data_setup.Flowers102(train_transform=augmented_transform(model.transforms),
+                                       test_transform=model.transforms,
+                                       batch_size=Config.batch_size,
+                                       num_workers=Config.num_workers)
     params = [
         {'params': model.features.parameters(), 'lr': 5e-5},
         {'params': model.classifier.parameters(), 'lr': 5e-4},
